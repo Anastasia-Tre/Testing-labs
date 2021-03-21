@@ -3,7 +3,7 @@ using IIG.Core.FileWorkingUtils;
 
 namespace Lab2 {
     [TestClass]
-    public class UnitTest1 {
+    public class FileWorkerTest {
         [TestMethod]
         public void TestMethod1() {
         }
