@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IIG.Core.FileWorkingUtils</name>
+    </assembly>
+    <members>
+        <member name="T:IIG.Core.FileWorkingUtils.FileWorker">
+            <summary>
+                Class for Most Common Interactions w/ Files
+            </summary>
+        </member>
+        <member name="F:IIG.Core.FileWorkingUtils.FileWorker.InvalidFileNameRegex">
+            <summary>
+                Regular Expression for Check File Name on Invalidity
+            </summary>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.#ctor(System.String)">
+            <summary>
+                Constructor of FileWorker form path
+            </summary>
+            <param name="path">Path to file</param>
+        </member>
+        <member name="P:IIG.Core.FileWorkingUtils.FileWorker.FilePath">
+            <summary>
+                Path to File
+            </summary>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.ReadLines">
+            <summary>
+                Read all Lines from File
+            </summary>
+            <returns>Array of Lines</returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.ReadAll">
+            <summary>
+                Read text from File
+            </summary>
+            <returns>Text</returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.Write(System.String)">
+            <summary>
+                Write text to File
+            </summary>
+            <param name="text">Text that should be written</param>
+            <returns>Result of writing attempt</returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.TryWrite(System.String,System.Int32)">
+            <summary>
+                Tries to Write text to File
+            </summary>
+            <param name="text">Text that should be written</param>
+            <param name="tries">Number of Tries</param>
+            <returns>Result of writing attempt(s)</returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.GetFullPath">
+            <summary>
+                Gets Full Path to File
+            </summary>
+            <returns>Full Path to File</returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.GetFileName">
+            <summary>
+                Gets File Name
+            </summary>
+            <returns>File Name</returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.IsPathValid(System.String)">
+            <summary>
+                Check Path on Validity
+            </summary>
+            <param name="path">Is Path Valid</param>
+            <returns></returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.ReadLines(System.String)">
+            <summary>
+                Read all Lines from File
+            </summary>
+            <param name="path">File that should be read</param>
+            <returns>Array of Lines</returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.ReadAll(System.String)">
+            <summary>
+                Read text from File
+            </summary>
+            <param name="path">File that should be read</param>
+            <returns>Text</returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.Write(System.String,System.String)">
+            <summary>
+                Write text to File
+            </summary>
+            <param name="text">Text that should be written</param>
+            <param name="path">File that should be written</param>
+            <returns>Result of writing attempt</returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.TryWrite(System.String,System.String,System.Int32)">
+            <summary>
+                Tries to Write text to File
+            </summary>
+            <param name="text">Text that should be written</param>
+            <param name="path">File that should be written</param>
+            <param name="tries">Number of Tries</param>
+            <returns>Result of writing attempt(s)</returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.TryCopy(System.String,System.String,System.Boolean,System.Int32)">
+            <summary>
+                Tries to Copy File
+            </summary>
+            <param name="from">Source File</param>
+            <param name="to">Destination File</param>
+            <param name="rewrite">Should Rewrite</param>
+            <param name="tries">Number of Tries</param>
+            <returns>Result of Copy Attempt(s)</returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.GetFullPath(System.String)">
+            <summary>
+                Gets Full Path to File
+            </summary>
+            <param name="path">Path to File</param>
+            <returns>Full Path to File</returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.GetFileName(System.String)">
+            <summary>
+                Gets File Name
+            </summary>
+            <param name="path">Path to File</param>
+            <returns>File Name</returns>
+        </member>
+        <member name="M:IIG.Core.FileWorkingUtils.FileWorker.MkDir(System.String)">
+            <summary>
+                Creates Directory
+            </summary>
+            <param name="path">Path to Directory that should be Created</param>
+            <returns>Result of Creating Process</returns>
+        </member>
+    </members>
+</doc>

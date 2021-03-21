@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <Reference Include="IIG.Core.FileWorkingUtils">
-      <HintPath>..\..\IIG.Core.FileWorkingUtils\IIG.Core.FileWorkingUtils.dll</HintPath>
+      <HintPath>IIG.Core.FileWorkingUtils\IIG.Core.FileWorkingUtils.dll</HintPath>
     </Reference>
   </ItemGroup>
 
