@@ -9,44 +9,27 @@ namespace Lab2 {
         private string _file;
         private string _text;
         private static string _bigString;
+        private static string _bigStringLines;
+        private static string _longName;
 
         [ClassInitialize()]
         public static void ClassInit(TestContext context) { 
-            _bigString = "F\n";
-            for (int i = 0; i < 28; i++) {
+            _bigString = "F";
+            _bigStringLines = "F\n";
+            _longName = "A";
+            for (int i = 0; i < 29; i++) {
                 _bigString += _bigString;
+                if(i < 25) _bigStringLines += _bigStringLines;
+            }
+            for (int i = 0; i < 254; i++) {
+                _longName += "A";
             }
         }
-
 
         [TestInitialize]
         public void Initialization() {
             _file = "./test.txt";
             _text = "Some text to test";
-        }
-
-        [TestMethod]
-        public void Constructor_EqualityCheck() {
-            try {
-                var path1 = "C:/test.txt";
-                var path2 = "C:/test/test.txt";
-
-                var fileWorker1 = new FileWorker(path1);
-                var fileWorker11 = new FileWorker("C:/test.txt");
-                
-                var fileWorker2 = new FileWorker(path2);
-
-                Assert.IsNotNull(fileWorker1, "");
-                Assert.IsNotNull(fileWorker2, "");
-
-                Assert.AreEqual(fileWorker1.FilePath, fileWorker11.FilePath,
-                    "Object with the same parameters are not equal");
-                Assert.AreNotEqual(fileWorker1.FilePath, fileWorker2.FilePath,
-                    "Object with the different parameters are equal");
-
-            } catch (Exception ex) {
-                Assert.Fail(ex.Message);
-            }
         }
 
         [TestMethod]
@@ -197,9 +180,6 @@ namespace Lab2 {
             Assert.IsNotNull(result, "TryWrite error");
             Assert.IsTrue(result, "TryWrite in file error: min+1 number of tries");
         }
-
-        // max size of string -- write,trywrite
-        
 
         [TestMethod]
         public void Test_TryWrite_Invalid_OutOfRange_Case1() {
@@ -357,8 +337,6 @@ namespace Lab2 {
             Assert.IsNotNull(actual, "ReadAll error: big file");
         }
 
-        // big file
-
         [TestMethod]
         public void Test_ReadLines() {
             var fileWorker = new FileWorker(_file);
@@ -396,9 +374,64 @@ namespace Lab2 {
         [TestMethod]
         public void Test_ReadLines_BigFile() {
             var fileWorker = new FileWorker(_file);
-            fileWorker.Write(_bigString);
+            fileWorker.Write(_bigStringLines);
             var actual = fileWorker.ReadLines();
             Assert.IsNotNull(actual, "ReadLines error: big file");
+        }
+
+        [TestMethod]
+        public void Test_MkDir() {
+            var result = FileWorker.MkDir("./test");
+            Assert.IsNotNull(result, "MkDir error");
+        }
+
+        [TestMethod]
+        public void Test_MkDir_NoNameFolder() {
+            var result = FileWorker.MkDir("./");
+            Assert.IsNotNull(result, "MkDir error: no name folder");
+        }
+
+        [TestMethod]
+        public void Test_MkDir_EmptyString() {
+            Assert.ThrowsException<ArgumentException>(() => FileWorker.MkDir(""), 
+                "Mkdir error: empty string");
+        }
+
+        [TestMethod]
+        public void Test_MkDir_InNonexistentFolder() {
+            Assert.ThrowsException<ArgumentException>(() => FileWorker.MkDir("./tests/test"), 
+                "Mkdir error: in nonexistent folder");
+        }
+
+        [TestMethod]
+        public void Test_MkDir_LongName() {
+            var result = FileWorker.MkDir(_longName);
+            Assert.IsNotNull(result, "MkDir error: long name");
+        }
+        
+        //???????????????????????????/////////
+        [TestMethod]
+        public void Test_MkDir_AlreadyExistentFolder() {
+            FileWorker.MkDir("./test");
+            var result = FileWorker.MkDir("./test");
+            Assert.IsNotNull(result, "MkDir error: already existent folder");
+        }
+
+        [TestMethod]
+        public void Test_IsPathValid() {
+            var result = FileWorker.IsPathValid(_longName);
+            Assert.IsTrue(result, "IsPathValid error:");
+        }
+
+
+        // max lenght of filename
+        [TestMethod]
+        public void Test() {
+            //bool result = FileWorker.IsPathValid("./");
+            //var result = FileWorker.MkDir("./Test");
+            //var result = FileWorker.TryCopy(_file, "C:/test.txt", true);
+            
+            //Assert.AreEqual("", result);
         }
 
     }
