@@ -487,19 +487,19 @@ namespace Lab2 {
         }
 
         [TestMethod]
-        public void Test_MkDir_EmptyString() {
+        public void Test_MkDir_Exception_EmptyString() {
             Assert.ThrowsException<ArgumentException>(() => FileWorker.MkDir(""), 
                 "Mkdir error: empty string");
         }
 
         [TestMethod]
-        public void Test_MkDir_Null() {
+        public void Test_MkDir_Exception_Null() {
             Assert.ThrowsException<ArgumentNullException>(() => FileWorker.MkDir(null),
                 "Mkdir error: null");
         }
 
         [TestMethod]
-        public void Test_MkDir_InNonexistentFolder() {
+        public void Test_MkDir_Exception_InNonexistentFolder() {
             Assert.ThrowsException<ArgumentException>(() => FileWorker.MkDir("./tests/test"), 
                 "Mkdir error: in nonexistent folder");
         }
@@ -513,14 +513,14 @@ namespace Lab2 {
         [TestMethod]
         [ExpectedException(typeof(System.IO.IOException),
             "TryCopy error: existent file(rewrite false)")]
-        public void Test_TryCopy_RewriteFalse_ExistentFile() {
+        public void Test_TryCopy_Exception_RewriteFalse_ExistentFile() {
             var result = FileWorker.TryCopy(_file, _file, false);
         }
 
         [TestMethod]
         [ExpectedException(typeof(System.IO.IOException),
             "TryCopy error: the same file(rewrite true)")]
-        public void Test_TryCopy_RewriteTrue_SameFile() {
+        public void Test_TryCopy_Exception_RewriteTrue_SameFile() {
             var result = FileWorker.TryCopy(_file, _file, true);
         }
 
