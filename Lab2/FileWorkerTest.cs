@@ -177,7 +177,7 @@ namespace Lab2 {
 
         [TestMethod]
         public void Test_GetFullPath_LongPath() {
-            var fileWorker = new FileWorker(_longName + "/" + _longName);
+            var fileWorker = new FileWorker(_longName);
             var actual = fileWorker.GetFullPath();
             Assert.IsNotNull(actual, "GetFullPath of file error: long path");
         }
