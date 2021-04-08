@@ -105,20 +105,15 @@ namespace Lab2 {
             Assert.IsTrue(result, "IsPathValid error: long name file");
         }
 
-        //???????????????????????????????????????????/
-        //[TestMethod]
+        [TestMethod]
         public void Test_IsPathValid_Exception_InvalidSymbols() {
-            Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid(":"), "InvalidSymbols(:) in path");
             Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid("<"), "InvalidSymbols(<) in path");
             Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid(">"), "InvalidSymbols(>) in path");
             Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid("\""), "InvalidSymbols(\") in path");
-            Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid("/"), "InvalidSymbols(/) in path");
-            Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid("\\"), "InvalidSymbols(\\) in path");
             Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid("|"), "InvalidSymbols(|) in path");
             Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid("*"), "InvalidSymbols(*) in path");
             Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid("?"), "InvalidSymbols(?) in path");
         }
-
 
         [TestMethod]
         public void Test_GetFileName_ValidName() {
@@ -129,7 +124,6 @@ namespace Lab2 {
             Assert.AreEqual(expected, actual, "GetFileName error: valid name");
         }
 
-        // должно кинуть ошибку что имя файла пустое
         [TestMethod]
         public void Test_GetFileName_NoNameFile() {
             var fileWorker = new FileWorker("./");
@@ -188,7 +182,6 @@ namespace Lab2 {
             Assert.IsNotNull(actual, "GetFullPath of file error: long path");
         }
 
-        // TryWrite класи еквівалентності
         [TestMethod]
         public void Test_TryWrite_DefaultTries() {
             var fileWorker = new FileWorker(_file);
@@ -205,7 +198,6 @@ namespace Lab2 {
             Assert.IsTrue(result, "TryWrite in file error: custom number of tries");
         }
 
-        // Граничні значення >0
         [TestMethod]
         public void Test_TryWrite_Valid_OnBorder() {
             var fileWorker = new FileWorker(_file);
@@ -214,7 +206,6 @@ namespace Lab2 {
             Assert.IsTrue(result, "TryWrite in file error: max number of tries(on border)");
         }
 
-        // out of range нельзя из за огранечения типа int
         [TestMethod]
         public void Test_TryWrite_Valid_InRange_Case1() {
             var fileWorker = new FileWorker(_file);
@@ -248,6 +239,14 @@ namespace Lab2 {
         }
 
         [TestMethod]
+        public void Test_TryWrite() {
+            var fileWorker = new FileWorker(_file);
+            var result = fileWorker.TryWrite(_text);
+            Assert.IsNotNull(result, "TryWrite error");
+            Assert.IsTrue(result, "TryWrite in file error: short string");
+        }
+
+        [TestMethod]
         public void Test_TryWrite_Null() {
             var fileWorker = new FileWorker(_file);
             var result = fileWorker.TryWrite(null, 2);
@@ -261,6 +260,14 @@ namespace Lab2 {
             var result = fileWorker.TryWrite("", 2);
             Assert.IsNotNull(result, "TryWrite error");
             Assert.IsTrue(result, "TryWrite in file error: empty string");
+        }
+
+        [TestMethod]
+        public void Test_TryWrite_BigString() {
+            var fileWorker = new FileWorker(_file);
+            var result = fileWorker.TryWrite(_bigString, 10);
+            Assert.IsNotNull(result, "TryWrite error");
+            Assert.IsTrue(result, "TryWrite in file error: big string");
         }
 
         [TestMethod]
@@ -280,11 +287,11 @@ namespace Lab2 {
         }
 
         [TestMethod]
-        public void Test_TryWrite_BigString() {
-            var fileWorker = new FileWorker(_file);
-            var result = fileWorker.TryWrite(_bigString, 10);
+        public void Test_TryWrite_LongNameFile() {
+            var fileWorker = new FileWorker(_longName);
+            var result = fileWorker.TryWrite(_text, 2);
             Assert.IsNotNull(result, "TryWrite error");
-            Assert.IsTrue(result, "TryWrite in file error: big string");
+            Assert.IsFalse(result, "TryWrite in file error: long name file");
         }
 
         [TestMethod]
@@ -312,6 +319,14 @@ namespace Lab2 {
         }
 
         [TestMethod]
+        public void Test_Write_BigString() {
+            var fileWorker = new FileWorker(_file);
+            var result = fileWorker.Write(_bigString);
+            Assert.IsNotNull(result, "Write error");
+            Assert.IsTrue(result, "Write in file error: big string");
+        }
+
+        [TestMethod]
         public void Test_Write_NonexistentFile() {
             var fileWorker = new FileWorker("./nottest.txt");
             var result = fileWorker.Write(_text);
@@ -328,11 +343,11 @@ namespace Lab2 {
         }
 
         [TestMethod]
-        public void Test_Write_BigString() {
-            var fileWorker = new FileWorker(_file);
-            var result = fileWorker.Write(_bigString);
+        public void Test_Write_LongNameFile() {
+            var fileWorker = new FileWorker(_longName);
+            var result = fileWorker.Write(_text);
             Assert.IsNotNull(result, "Write error");
-            Assert.IsTrue(result, "Write in file error: big string");
+            Assert.IsFalse(result, "Write in file error: long name file");
         }
 
         [TestMethod]
@@ -366,8 +381,16 @@ namespace Lab2 {
         }
 
         [TestMethod]
+        public void Test_ReadAll_BigFile() {
+            var fileWorker = new FileWorker(_file);
+            fileWorker.Write(_bigString);
+            var actual = fileWorker.ReadAll();
+            Assert.IsNotNull(actual, "ReadAll error: big file");
+        }
+
+        [TestMethod]
         public void Test_ReadAll_NonexistentFile() {
-            var fileWorker = new FileWorker("C:/nottest.txt");
+            var fileWorker = new FileWorker("../nottest.txt");
             var actual = fileWorker.ReadAll();
             Assert.IsNull(actual, "ReadAll error: nonexistent file return not null");
         }
@@ -380,11 +403,13 @@ namespace Lab2 {
         }
 
         [TestMethod]
-        public void Test_ReadAll_BigFile() {
-            var fileWorker = new FileWorker(_file);
-            fileWorker.Write(_bigString);
+        public void Test_ReadAll_LongNameFile() {
+            var fileWorker = new FileWorker("../" + _longName);
+            fileWorker.Write(_text);
+            var expected = _text;
             var actual = fileWorker.ReadAll();
-            Assert.IsNotNull(actual, "ReadAll error: big file");
+            Assert.IsNotNull(actual, "ReadAll error");
+            Assert.AreEqual(expected, actual, "ReadAll error: long name file");
         }
 
         [TestMethod]
@@ -418,6 +443,14 @@ namespace Lab2 {
         }
 
         [TestMethod]
+        public void Test_ReadLines_BigFile() {
+            var fileWorker = new FileWorker(_file);
+            fileWorker.Write(_bigString);
+            var actual = fileWorker.ReadLines();
+            Assert.IsNotNull(actual, "ReadLines error: big file");
+        }
+
+        [TestMethod]
         public void Test_ReadLines_NonexistentFile() {
             var fileWorker = new FileWorker("C:/nottest.txt");
             var actual = fileWorker.ReadLines();
@@ -432,11 +465,13 @@ namespace Lab2 {
         }
 
         [TestMethod]
-        public void Test_ReadLines_BigFile() {
-            var fileWorker = new FileWorker(_file);
-            fileWorker.Write(_bigString);
+        public void Test_ReadLines_LongNameFile() {
+            var fileWorker = new FileWorker("../" + _longName);
+            fileWorker.Write("test\ntest\ntest");
+            string[] expected = { "test", "test", "test" };
             var actual = fileWorker.ReadLines();
-            Assert.IsNotNull(actual, "ReadLines error: big file");
+            Assert.IsNotNull(actual, "ReadLines error");
+            Assert.AreEqual(expected.ToString(), actual.ToString(), "ReadLines error: long name file");
         }
 
         [TestMethod]
@@ -474,14 +509,6 @@ namespace Lab2 {
             var result = FileWorker.MkDir(_longName);
             Assert.IsNotNull(result, "MkDir error: long name");
         }
-        
-        //???????????????????????????/////////
-        [TestMethod]
-        public void Test_MkDir_AlreadyExistentFolder() {
-            FileWorker.MkDir("./test");
-            var result = FileWorker.MkDir("./test");
-            Assert.IsNotNull(result, "MkDir error: already existent folder");
-        }
 
         [TestMethod]
         [ExpectedException(typeof(System.IO.IOException),
@@ -491,17 +518,17 @@ namespace Lab2 {
         }
 
         [TestMethod]
-        public void Test_TryCopy_RewriteTrue_ExistentFile_DefaultTries() {
-            var result = FileWorker.TryCopy(_file, "./test2.txt", true);
-            Assert.IsNotNull(result, "TryCopy error");
-            Assert.IsTrue(result, "TryCopy error: existent file(rewrite true) default tries");
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(System.IO.IOException),
             "TryCopy error: the same file(rewrite true)")]
         public void Test_TryCopy_RewriteTrue_SameFile() {
             var result = FileWorker.TryCopy(_file, _file, true);
+        }
+
+        [TestMethod]
+        public void Test_TryCopy_RewriteTrue_ExistentFile_DefaultTries() {
+            var result = FileWorker.TryCopy(_file, "./test2.txt", true);
+            Assert.IsNotNull(result, "TryCopy error");
+            Assert.IsTrue(result, "TryCopy error: existent file(rewrite true) default tries");
         }
 
         [TestMethod]
@@ -548,9 +575,9 @@ namespace Lab2 {
 
         [TestMethod]
         public void Test_TryCopy_Exception_RewriteTrue_Null() {
-            Assert.ThrowsException<ArgumentNullException>(() => FileWorker.TryCopy(null, "./test2.txt", true), 
+            Assert.ThrowsException<ArgumentNullException>(() => FileWorker.TryCopy(null, _file, true), 
                 "TryCopy error: first argument null");
-            Assert.ThrowsException<ArgumentNullException>(() => FileWorker.TryCopy("./test2.txt", null, true),
+            Assert.ThrowsException<ArgumentNullException>(() => FileWorker.TryCopy(_file, null, true),
                 "TryCopy error: second argument null");
             Assert.ThrowsException<ArgumentNullException>(() => FileWorker.TryCopy(null, null, true),
                 "TryCopy error: both arguments null");
@@ -558,9 +585,9 @@ namespace Lab2 {
 
         [TestMethod]
         public void Test_TryCopy_Exception_RewriteFalse_Null() {
-            Assert.ThrowsException<ArgumentNullException>(() => FileWorker.TryCopy(null, "./test2.txt", false),
+            Assert.ThrowsException<ArgumentNullException>(() => FileWorker.TryCopy(null, _file, false),
                "TryCopy error: first argument null");
-            Assert.ThrowsException<ArgumentNullException>(() => FileWorker.TryCopy("./test2.txt", null, false),
+            Assert.ThrowsException<ArgumentNullException>(() => FileWorker.TryCopy(_file, null, false),
                 "TryCopy error: second argument null");
             Assert.ThrowsException<ArgumentNullException>(() => FileWorker.TryCopy(null, null, false),
                 "TryCopy error: both arguments null");
