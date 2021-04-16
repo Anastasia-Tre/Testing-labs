@@ -106,13 +106,21 @@ namespace Lab2 {
         }
 
         [TestMethod]
-        public void Test_IsPathValid_Exception_InvalidSymbols() {
-            Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid("<"), "InvalidSymbols(<) in path");
-            Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid(">"), "InvalidSymbols(>) in path");
-            Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid("\""), "InvalidSymbols(\") in path");
-            Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid("|"), "InvalidSymbols(|) in path");
-            Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid("*"), "InvalidSymbols(*) in path");
-            Assert.ThrowsException<ArgumentException>(() => FileWorker.IsPathValid("?"), "InvalidSymbols(?) in path");
+        public void Test_IsPathValid_NoNameFile() {
+            var result = FileWorker.IsPathValid("./");
+            Assert.IsNotNull(result, "IsPathValid error");
+            Assert.IsTrue(result, "IsPathValid error: no name file");
+        }
+
+        [TestMethod]
+        public void Test_IsPathValid_InvalidSymbols() {
+            Assert.IsFalse(FileWorker.IsPathValid("<"), "InvalidSymbols(<) in path");
+            Assert.IsFalse(FileWorker.IsPathValid(">"), "InvalidSymbols(>) in path");
+            Assert.IsFalse(FileWorker.IsPathValid("\""), "InvalidSymbols(\") in path");
+            Assert.IsFalse(FileWorker.IsPathValid("|"), "InvalidSymbols(|) in path");
+            Assert.IsFalse(FileWorker.IsPathValid("*"), "InvalidSymbols(*) in path");
+            Assert.IsFalse(FileWorker.IsPathValid("?"), "InvalidSymbols(?) in path");
+            Assert.IsFalse(FileWorker.IsPathValid(":"), "InvalidSymbols(:) in path");
         }
 
         [TestMethod]
