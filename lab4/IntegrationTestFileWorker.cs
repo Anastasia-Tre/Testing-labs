@@ -7,11 +7,16 @@ namespace Lab4 {
     [TestClass]
     public class IntegrationTestFileWorker {
         private static string _longName;
+        private static string _bigString;
         [ClassInitialize()]
         public static void ClassInit(TestContext context) {
             _longName = "A";
+            _bigString = "A";
             for (int i = 0; i < 254; i++) {
                 _longName += "A";
+            }
+            for (int i = 0; i < 25; i++) {
+                _bigString += _bigString;
             }
         }
 
@@ -51,6 +56,7 @@ namespace Lab4 {
         [TestMethod]
         public void Test_Add_LongFile() {
             var fileWorker = new FileWorker("../../../test/test2.txt");
+            fileWorker.Write(_bigString);
             string content = fileWorker.ReadAll();
             byte[] data = Encoding.ASCII.GetBytes(content);
             var result = _databaseConnection.AddFile(fileWorker.GetFileName(), data);
