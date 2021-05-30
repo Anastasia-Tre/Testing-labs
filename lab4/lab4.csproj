@@ -11,18 +11,21 @@
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.1" />
     <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
     <PackageReference Include="coverlet.collector" Version="1.3.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="IIG.BinaryFlag">
-      <HintPath>D:\Учеба\КПІ тестирование\Labs\Lab3\IIG.BinaryFlag\IIG.BinaryFlag.dll</HintPath>
+      <HintPath>..\Lab3\IIG.BinaryFlag\IIG.BinaryFlag.dll</HintPath>
     </Reference>
     <Reference Include="IIG.Core.FileWorkingUtils">
-      <HintPath>D:\Учеба\КПІ тестирование\Labs\Lab2\IIG.Core.FileWorkingUtils\IIG.Core.FileWorkingUtils.dll</HintPath>
+      <HintPath>..\Lab2\IIG.Core.FileWorkingUtils\IIG.Core.FileWorkingUtils.dll</HintPath>
     </Reference>
     <Reference Include="IIG.DatabaseConnectionUtils">
-      <HintPath>D:\Учеба\КПІ тестирование\Labs\Lab4\IIG.DatabaseConnectionUtils\IIG.DatabaseConnectionUtils.dll</HintPath>
+      <HintPath>IIG.DatabaseConnectionUtils\IIG.DatabaseConnectionUtils.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+  
 
 </Project>
